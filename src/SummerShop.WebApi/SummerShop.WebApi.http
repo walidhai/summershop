@@ -1,0 +1,6 @@
+@SummerShop.WebApi_HostAddress = http://localhost:5023
+
+GET {{SummerShop.WebApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
