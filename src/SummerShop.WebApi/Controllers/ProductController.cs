@@ -1,12 +1,13 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SummerShop.WebApi.Data;
-using SummerShop.WebApi.Models.Product;
+using SummerShop.WebApi.Domain;
+using SummerShop.WebApi.Models;
+using SummerShop.WebApi.Models.Mappings;
 
 namespace SummerShop.WebApi.Controllers;
 
-[Route("API/[controller]")]
+[Route("api/[controller]")]
 [ApiController]
 public class ProductController : ControllerBase
 {
@@ -28,7 +29,7 @@ public class ProductController : ControllerBase
             return NotFound();
         }
 
-        return product;
+        return Ok(product);
     }
     
     
@@ -37,15 +38,12 @@ public class ProductController : ControllerBase
     {
         try
         {
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<AddProductModel, Product>());
-            var mapper = config.CreateMapper();
-
-            var product = mapper.Map<Product>(addProductModel);
+            var product = addProductModel.ToProduct();
 
             _context.Products.Add(product);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetArticle", new { id = product.Id }, product);
+            return CreatedAtAction(nameof(GetArticle), new { id = product.Id }, product);
         }
         catch (Exception e)
         {

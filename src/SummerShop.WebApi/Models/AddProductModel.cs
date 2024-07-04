@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace SummerShop.WebApi.Models.Product;
+namespace SummerShop.WebApi.Models;
 
 public class AddProductModel
 {

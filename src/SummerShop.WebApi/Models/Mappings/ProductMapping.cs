@@ -1,0 +1,25 @@
+﻿
+using SummerShop.WebApi.Domain;
+
+namespace SummerShop.WebApi.Models.Mappings;
+
+public static class ProductMapping
+{
+    public static Product ToProduct(this AddProductModel productModel)
+    {
+        return new Product
+        {
+            ProductName = productModel.ProductName,
+            Price = productModel.Price
+        };
+    }
+
+    public static Product ToProduct(this UpdateProductModel productModel)
+    {
+        return new Product
+        {
+            ProductName = productModel.ProductName,
+            Price = productModel.Price
+        };
+    }
+}

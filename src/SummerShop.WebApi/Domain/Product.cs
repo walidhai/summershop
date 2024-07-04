@@ -1,4 +1,4 @@
-﻿namespace SummerShop.WebApi.Data;
+﻿namespace SummerShop.WebApi.Domain;
 
 public class Product
 {
