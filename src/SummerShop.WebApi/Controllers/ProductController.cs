@@ -1,15 +1,16 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using SummerShop.WebApi.Data;
+using SummerShop.Application.Models;
+using SummerShop.Application.Models.Mappings;
+using SummerShop.Application.Services;
+using SummerShop.Data;
 using SummerShop.WebApi.Domain;
-using SummerShop.WebApi.Models;
-using SummerShop.WebApi.Models.Mappings;
 
 namespace SummerShop.WebApi.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class ProductController : ControllerBase
+public class ProductController(IProductService productService) : ControllerBase
 {
     private readonly ShopDbContext _context;
     // GET
@@ -20,7 +21,7 @@ public class ProductController : ControllerBase
     }
     
     [HttpGet("{id}")]
-    public async Task<ActionResult<Product>> GetArticle(int id)
+    public async Task<ActionResult<Product>> GetProduct(int id)
     {
         var product = await _context.Products.FindAsync(id);
 
@@ -34,16 +35,15 @@ public class ProductController : ControllerBase
     
     
     [HttpPost]
-    public async Task<ActionResult<Product>> PostArticle(AddProductModel addProductModel)
+    public async Task<ActionResult<Product>> PostProduct(AddProductModel addProductModel)
     {
         try
         {
-            var product = addProductModel.ToProduct();
-
-            _context.Products.Add(product);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction(nameof(GetArticle), new { id = product.Id }, product);
+            var product = await productService.TryAddProduct(addProductModel);
+            //returnere noe bedre enn null om det failer
+            if (product is null)
+                return BadRequest();
+            return CreatedAtAction(nameof(GetProduct), new { id = product.Id }, product);
         }
         catch (Exception e)
         {

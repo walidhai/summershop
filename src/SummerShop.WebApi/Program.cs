@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using SummerShop.WebApi.Data;
+using SummerShop.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
