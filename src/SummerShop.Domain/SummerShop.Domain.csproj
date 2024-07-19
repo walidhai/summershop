@@ -10,4 +10,9 @@
       <Folder Include="Entities\" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="8.0.7" />
+      <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.10.0" />
+    </ItemGroup>
+
 </Project>

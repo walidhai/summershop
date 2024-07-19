@@ -5,23 +5,22 @@ using SummerShop.WebApi.Domain;
 
 namespace SummerShop.Application.Services;
 
-public class ProductService() : IProductService
+public class ProductService(ShopDbContext context) : IProductService
 {
-    private readonly ShopDbContext _context;
     public async Task<Product?> TryAddProduct(AddProductModel addProductModel)
     {
         try
         {
             var product = addProductModel.ToProduct();
 
-            _context.Products.Add(product);
-            await _context.SaveChangesAsync();
+            context.Products.Add(product);
+            await context.SaveChangesAsync();
             return product;
         }
         catch (Exception e)
         {
             //Handle exception
-            //Console.WriteLine(e);
+            Console.WriteLine(e);
             return null;
         }
     }
