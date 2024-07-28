@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SummerShop.WebApi.Domain;
 
-namespace SummerShop.WebApi.Data;
+namespace SummerShop.Data;
 
 public class ShopDbContext:DbContext
 {

@@ -1,7 +1,7 @@
 ﻿
 using SummerShop.WebApi.Domain;
 
-namespace SummerShop.WebApi.Models.Mappings;
+namespace SummerShop.Application.Models.Mappings;
 
 public static class ProductMapping
 {
