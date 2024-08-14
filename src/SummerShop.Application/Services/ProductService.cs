@@ -1,4 +1,6 @@
-﻿using SummerShop.Application.Models;
+﻿using System.Collections;
+using Microsoft.EntityFrameworkCore;
+using SummerShop.Application.Models;
 using SummerShop.Application.Models.Mappings;
 using SummerShop.Data;
 using SummerShop.WebApi.Domain;
@@ -24,9 +26,33 @@ public class ProductService(ShopDbContext context) : IProductService
             return null;
         }
     }
+
+    public async Task<GetProductModel?> TryGetProduct(int id)
+    {
+        try
+        {
+            var product = await context.Products.FindAsync(id);
+            if (product is null)
+                return null;
+            return product.FromProduct();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
+
+    public async Task<IEnumerable<GetProductModel>?> TryGetAllProducts()
+    {
+        var products = await context.Products.ToListAsync();
+        return products.Select(product => product.FromProduct());
+    }
 }
 
 public interface IProductService
 {
     public Task<Product?> TryAddProduct(AddProductModel addProductModel);
+    public Task<GetProductModel?> TryGetProduct(int id);
+    public Task<IEnumerable<GetProductModel>?> TryGetAllProducts();
 }

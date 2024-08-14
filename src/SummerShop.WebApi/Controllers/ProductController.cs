@@ -12,24 +12,22 @@ namespace SummerShop.WebApi.Controllers;
 [ApiController]
 public class ProductController(IProductService productService) : ControllerBase
 {
-    private readonly ShopDbContext _context;
     // GET
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
+    public async Task<ActionResult<IEnumerable<GetProductModel>>> GetProducts()
     {
-        return await _context.Products.ToListAsync();
+        var allProducts = productService.TryGetAllProducts();
+        if (allProducts is null)
+            return NotFound();
+        return Ok(allProducts);
     }
     
     [HttpGet("{id}")]
     public async Task<ActionResult<Product>> GetProduct(int id)
     {
-        var product = await _context.Products.FindAsync(id);
-
+        var product = await productService.TryGetProduct(id);
         if (product == null)
-        {
             return NotFound();
-        }
-
         return Ok(product);
     }
     

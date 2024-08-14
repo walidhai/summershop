@@ -22,4 +22,13 @@ public static class ProductMapping
             Price = productModel.Price
         };
     }
+
+    public static GetProductModel FromProduct(this Product product)
+    {
+        return new GetProductModel
+        {
+            ProductName = product.ProductName,
+            Price = product.Price
+        };
+    }
 }
