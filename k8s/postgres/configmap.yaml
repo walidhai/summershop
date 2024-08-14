@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres-cm
+data:
+  POSTGRES_USER: summershop
+  POSTGRES_PASSWORD: summershop
+  POSTGRES_DB: summershop

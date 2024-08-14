@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: postgres
+spec:
+  selector:
+    matchLabels:
+      app: postgres
+  serviceName: "postgres-svc"
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      initContainers:
+        - name: tear-down
+          image: busybox
+          command: ["sh", "-c", "rm -rf /var/lib/postgresql/data/*"]
+      containers:
+        - name: postgres
+          image: postgres
+          envFrom:
+            - configMapRef:
+                name: postgres-cm
+          ports:
+            - containerPort: 5432
+              name: postgres
+          volumeMounts:
+            - name: pg-data
+              mountPath: /var/lib/postgresql/data
+          lifecycle:
+            preStart:
+              exec:
+                command:
+                  - sh
+                  - -c
+                  - rm -rf /var/lib/postgresql/data/*
+            postStart:
+              exec:
+                command:
+                  - sh
+                  - -c
+                  - |
+                    until PGPASSWORD=$POSTGRES_PASSWORD psql -U "$POSTGRES_USER" -c '\q'; do
+                      sleep 1
+                    done
+                    if ! PGPASSWORD=$POSTGRES_PASSWORD psql -U "$POSTGRES_USER" -lqt | cut -d \| -f 1 | grep -qw "summershop"; then
+                      PGPASSWORD=$POSTGRES_PASSWORD createdb -U "$POSTGRES_USER" "summershop"
+                    fi
+      volumes:
+        - name: pg-data
+          persistentVolumeClaim:
+            claimName: postgres-pvc
