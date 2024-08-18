@@ -45,7 +45,7 @@ public class ProductService(ShopDbContext context) : IProductService
 
     public async Task<IEnumerable<GetProductModel>?> TryGetAllProducts()
     {
-        var products = await context.Products.ToListAsync();
+        var products = await  context.Set<Product>().ToListAsync();
         return products.Select(product => product.FromProduct());
     }
 }

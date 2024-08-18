@@ -1,13 +1,17 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using SummerShop.WebApi.Domain;
 
 namespace SummerShop.Data;
 
 public class ShopDbContext:DbContext
 {
-    public ShopDbContext(DbContextOptions<ShopDbContext> options) : base(options)
+    protected readonly IConfiguration _configuration;
+    public ShopDbContext(DbContextOptions<ShopDbContext> options, IConfiguration configuration) : base(options)
     {
+        _configuration = configuration;
     }
-    
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        => optionsBuilder.UseNpgsql(_configuration.GetConnectionString("DefaultConnection"));   
     public DbSet<Product> Products { get; set; }
 }

@@ -16,10 +16,8 @@ public class ProductController(IProductService productService) : ControllerBase
     [HttpGet]
     public async Task<ActionResult<IEnumerable<GetProductModel>>> GetProducts()
     {
-        var allProducts = productService.TryGetAllProducts();
-        if (allProducts is null)
-            return NotFound();
-        return Ok(allProducts);
+        var allProducts = await productService.TryGetAllProducts();
+        return allProducts is null ? NotFound() : Ok(allProducts);
     }
     
     [HttpGet("{id}")]
@@ -39,9 +37,9 @@ public class ProductController(IProductService productService) : ControllerBase
         {
             var product = await productService.TryAddProduct(addProductModel);
             //returnere noe bedre enn null om det failer
-            if (product is null)
-                return BadRequest();
-            return CreatedAtAction(nameof(GetProduct), new { id = product.Id }, product);
+            return product is null
+                ? BadRequest()
+                : CreatedAtAction(nameof(GetProduct), new { id = product.Id }, product);
         }
         catch (Exception e)
         {
