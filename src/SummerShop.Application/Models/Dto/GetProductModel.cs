@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace SummerShop.Application.Models;
+namespace SummerShop.Application.Models.Dto;
 
-public class AddProductModel
+public class GetProductModel
 {
     [Required]
     public string ProductName { get; set; }

@@ -1,19 +1,19 @@
-﻿using SummerShop.WebApi.Domain;
+﻿using System.ComponentModel.DataAnnotations;
+using SummerShop.WebApi.Domain;
 
 namespace SummerShop.Domain.Entities;
 
 public class CartItem
 {
     //Maybe make these ids guid instead of ints - will pass in an id int for now for simplicty sake
-    public CartItem(int itemId, Product product, int cartId)
+    public CartItem(int itemId, int productId)
     {
         ItemId = itemId;
-        Product = product;
-        ProductId = product.Id;
-        CartId = cartId;
+        ProductId = productId;
         Quantity = 1;
     }
     public int CartId { get; init; }
+    [Key]
     public int ItemId { get; init; }
     public Product Product { get; set; } 
     public int Quantity { get; set; }

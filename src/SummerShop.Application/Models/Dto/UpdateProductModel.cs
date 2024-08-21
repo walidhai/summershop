@@ -1,4 +1,4 @@
-﻿namespace SummerShop.Application.Models;
+﻿namespace SummerShop.Application.Models.Dto;
 
 public class UpdateProductModel
 {
