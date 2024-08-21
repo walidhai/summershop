@@ -27,4 +27,9 @@
         <Using Include="Xunit"/>
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\..\src\SummerShop.Data\SummerShop.Data.csproj" />
+      <ProjectReference Include="..\..\src\SummerShop.Domain\SummerShop.Domain.csproj" />
+    </ItemGroup>
+
 </Project>
