@@ -3,11 +3,10 @@ using SummerShop.WebApi.Domain;
 
 namespace SummerShop.Domain.Entities;
 
-public class Cart
+public class Cart : Entity
 {
-    public Cart(int id)
+    public Cart()
     {
-        Id = id;
         CartItems = new List<CartItem>();
     }
     [Key]
