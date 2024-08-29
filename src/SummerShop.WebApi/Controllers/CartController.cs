@@ -74,7 +74,7 @@ namespace SummerShop.WebApi.Controllers
         [HttpPost]
         public async Task<ActionResult<Cart>> IncreaseCartItemQuantity([FromBody] CartItemQuantityRequestBody quantityRequest)
         {
-            if (quantityRequest.Quantity is 0)
+            if (quantityRequest.Quantity is 0 or < 0)
                 return BadRequest();
             try
             {
@@ -91,7 +91,7 @@ namespace SummerShop.WebApi.Controllers
         [HttpPost("/api/decrease")]
         public async Task<ActionResult<Cart>> DecreaseCartItemQuantity([FromBody] CartItemQuantityRequestBody quantityRequest)
         {
-            if (quantityRequest.Quantity is 0)
+            if (quantityRequest.Quantity is 0 or < 0)
                 return BadRequest();
             try
             {

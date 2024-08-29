@@ -128,7 +128,7 @@ public class CartRepository: BaseRepository<Cart>, ICartRepository
         var item = cart.CartItems.First(x => x.ProductId == itemId);
         item.Quantity -= quantity;
         if (quantity < 0)
-            return await RemoveShoppingCartItemAsync(cartId, itemId);
+            cart.CartItems.Remove(item);
         _dbContext.Attach(cart);
         await _dbContext.SaveChangesAsync();
         return await GetCartAsync(cartId);
