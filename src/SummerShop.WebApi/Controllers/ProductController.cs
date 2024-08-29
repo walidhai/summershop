@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SummerShop.Application.Models;
+using SummerShop.Application.Models.Dto;
 using SummerShop.Application.Models.Mappings;
 using SummerShop.Application.Services;
 using SummerShop.Data;

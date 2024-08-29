@@ -1,6 +1,8 @@
-﻿namespace SummerShop.WebApi.Domain;
+﻿using SummerShop.Domain.Entities;
 
-public class Product
+namespace SummerShop.WebApi.Domain;
+
+public class Product :Entity
 {
     public int Id { get; set; }
     public string ProductName { get; set; }

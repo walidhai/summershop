@@ -1,4 +1,5 @@
 ﻿
+using SummerShop.Application.Models.Dto;
 using SummerShop.WebApi.Domain;
 
 namespace SummerShop.Application.Models.Mappings;
